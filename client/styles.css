@@ -1,71 +1,50 @@
-/* Reset some default browser styles */
-body, h1, h2, p, ul {
-    margin: 0;
-    padding: 0;
-    font-family: Arial, sans-serif;
-}
-
-/* Basic page layout */
-body {
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-    background-color: #f4f4f4;
-    color: #333;
-}
-
-/* Header styles */
+/* General styles for the header */
 header {
-    background-color: #333;
-    color: white;
+    position: relative;
     padding: 20px;
-    text-align: center;
+    background-color: #f8f9fa; /* Light background for visibility */
+    text-align: center; /* Center-align text and inline elements */
 }
 
+/* Style for the header title */
 header h1 {
-    margin-bottom: 10px;
+    margin: 0;
 }
 
-header nav ul {
+/* Navigation styles */
+nav {
+    margin-top: 10px; /* Space between title and navigation */
+}
+
+/* Navigation list styles */
+nav ul {
     list-style-type: none;
+    padding: 0;
+    margin: 0;
     display: flex;
-    justify-content: center;
-    gap: 15px;
+    justify-content: center; /* Center-align navigation items */
 }
 
-header nav ul li a {
-    color: white;
-    text-decoration: none;
+/* Navigation list items */
+nav ul li {
+    margin: 0 10px; /* Horizontal spacing between items */
 }
 
-header nav ul li a:hover {
-    text-decoration: underline;
-}
-
-/* Main content styles */
-main {
-    flex-grow: 1;
-    padding: 20px;
-    text-align: center;
-}
-
-button {
+/* Styles for the login button */
+#loginButton {
+    position: absolute;
+    top: 20px;
+    right: 20px;
     padding: 10px 20px;
-    background-color: #333;
+    background-color: #007bff;
     color: white;
     border: none;
+    border-radius: 5px;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    font-size: 16px; /* Ensure the text size is appropriate */
 }
 
-button:hover {
-    background-color: #555;
-}
-
-/* Footer styles */
-footer {
-    background-color: #333;
-    color: white;
-    padding: 10px;
-    text-align: center;
+/* Hover effect for the login button */
+#loginButton:hover {
+    background-color: #0056b3;
 }
