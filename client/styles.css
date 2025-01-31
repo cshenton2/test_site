@@ -1,50 +1,18 @@
-/* General styles for the header */
-header {
-    position: relative;
-    padding: 20px;
-    background-color: #f8f9fa; /* Light background for visibility */
-    text-align: center; /* Center-align text and inline elements */
+/* Dark mode styles */
+body.dark-mode {
+    background-color: #121212; /* Dark background */
+    color: #fff; /* Light text */
 }
 
-/* Style for the header title */
-header h1 {
-    margin: 0;
+body.dark-mode .navbar {
+    background-color: #333; /* Dark navbar */
 }
 
-/* Navigation styles */
-nav {
-    margin-top: 10px; /* Space between title and navigation */
+body.dark-mode .card {
+    background-color: #2d2d2d;
+    border-color: #444;
 }
 
-/* Navigation list styles */
-nav ul {
-    list-style-type: none;
-    padding: 0;
-    margin: 0;
-    display: flex;
-    justify-content: center; /* Center-align navigation items */
-}
-
-/* Navigation list items */
-nav ul li {
-    margin: 0 10px; /* Horizontal spacing between items */
-}
-
-/* Styles for the login button */
-#loginButton {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    padding: 10px 20px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 16px; /* Ensure the text size is appropriate */
-}
-
-/* Hover effect for the login button */
-#loginButton:hover {
-    background-color: #0056b3;
+body.dark-mode .footer {
+    background-color: #333;
 }
