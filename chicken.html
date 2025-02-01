@@ -191,8 +191,22 @@
             createGrid();
         });
 
-        // Initialize the game
+        // Function to enable dark mode
+        function enableDarkMode() {
+            document.body.classList.add('dark-mode');
+            localStorage.setItem('darkMode', 'enabled'); // Store preference in localStorage
+        }
+
+        // Function to check and apply dark mode on page load
+        function applyDarkMode() {
+            if (localStorage.getItem('darkMode') === 'enabled') {
+                enableDarkMode();
+            }
+        }
+
+        // Initialize the game and apply dark mode if needed
         createGrid();
+        applyDarkMode();
     </script>
 </body>
 </html>
