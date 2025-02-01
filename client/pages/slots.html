@@ -12,6 +12,8 @@
             flex-direction: column;
             min-height: 100vh;
             text-align: center;
+            background-color: var(--bg-color, white);
+            color: var(--text-color, black);
         }
         .content {
             flex: 1;
@@ -20,6 +22,15 @@
         .slot-machine {
             font-size: 2rem;
             margin: 20px 0;
+        }
+        .bottom-left {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+        }
+        .dark-mode {
+            --bg-color: #121212;
+            --text-color: white;
         }
     </style>
 </head>
@@ -37,12 +48,37 @@
         <button class="btn btn-primary" onclick="spinSlots()">Spin</button>
     </div>
     
+    <button class="btn btn-warning bottom-left" onclick="refillBalance()">Refill Balance</button>
+    
     <footer class="bg-primary text-white text-center py-3">
         <p>&copy; 2025 My Site</p>
     </footer>
     
     <script>
-        let balance = 100;
+        function setCookie(name, value, days) {
+            let expires = "";
+            if (days) {
+                let date = new Date();
+                date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+                expires = "; expires=" + date.toUTCString();
+            }
+            document.cookie = name + "=" + value + expires + "; path=/";
+        }
+
+        function getCookie(name) {
+            let nameEQ = name + "=";
+            let ca = document.cookie.split(';');
+            for(let i = 0; i < ca.length; i++) {
+                let c = ca[i];
+                while (c.charAt(0) == ' ') c = c.substring(1, c.length);
+                if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
+            }
+            return null;
+        }
+
+        let balance = getCookie("balance") ? parseInt(getCookie("balance")) : 100;
+        document.getElementById("balance").textContent = balance;
+
         function spinSlots() {
             if (balance < 10) {
                 alert("Not enough balance!");
@@ -50,6 +86,7 @@
             }
             balance -= 10;
             document.getElementById("balance").textContent = balance;
+            setCookie("balance", balance, 7);
             
             const symbols = ["🍒", "🍋", "🍉", "⭐", "🔔"];
             let result = [
@@ -64,8 +101,23 @@
                 alert("You win 50 coins!");
                 balance += 50;
                 document.getElementById("balance").textContent = balance;
+                setCookie("balance", balance, 7);
+            }
+        }
+        
+        function refillBalance() {
+            balance = 100;
+            document.getElementById("balance").textContent = balance;
+            setCookie("balance", balance, 7);
+        }
+
+        window.onload = function() {
+            let darkModeSetting = localStorage.getItem("darkMode") || getCookie("darkMode");
+            if (darkModeSetting === "enabled" || darkModeSetting === "true") {
+                document.body.classList.add("dark-mode");
             }
         }
     </script>
+
 </body>
 </html>
