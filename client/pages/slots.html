@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Slots Game</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootswatch@5.3.3/dist/flatly/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            text-align: center;
+        }
+        .content {
+            flex: 1;
+            margin-top: 20px;
+        }
+        .slot-machine {
+            font-size: 2rem;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">My Site</a>
+        </div>
+    </nav>
+    
+    <div class="container my-5 content">
+        <h2>Slot Machine Game</h2>
+        <p>Balance: <span id="balance">100</span> coins</p>
+        <div class="slot-machine" id="slots">🎰 🎰 🎰</div>
+        <button class="btn btn-primary" onclick="spinSlots()">Spin</button>
+    </div>
+    
+    <footer class="bg-primary text-white text-center py-3">
+        <p>&copy; 2025 My Site</p>
+    </footer>
+    
+    <script>
+        let balance = 100;
+        function spinSlots() {
+            if (balance < 10) {
+                alert("Not enough balance!");
+                return;
+            }
+            balance -= 10;
+            document.getElementById("balance").textContent = balance;
+            
+            const symbols = ["🍒", "🍋", "🍉", "⭐", "🔔"];
+            let result = [
+                symbols[Math.floor(Math.random() * symbols.length)],
+                symbols[Math.floor(Math.random() * symbols.length)],
+                symbols[Math.floor(Math.random() * symbols.length)]
+            ];
+            
+            document.getElementById("slots").textContent = result.join(" ");
+            
+            if (result[0] === result[1] && result[1] === result[2]) {
+                alert("You win 50 coins!");
+                balance += 50;
+                document.getElementById("balance").textContent = balance;
+            }
+        }
+    </script>
+</body>
+</html>
