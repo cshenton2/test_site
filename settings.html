@@ -16,6 +16,16 @@
             min-height: 100vh;
             margin: 0;
         }
+
+        .main-content {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding-bottom: 600px;
+        }
+
         .settings-container {
             max-width: 600px;
             margin: 20px auto;
@@ -85,7 +95,7 @@
     <a href="index.html" class="back-button bg-primary">
         <i class="bi bi-arrow-left-circle"></i> Back to Home
     </a>
-
+<div class="main-content">
     <div class="container settings-container">
         <h2 class="text-center setting-title">Settings</h2>
 
@@ -102,8 +112,8 @@
             <h5>Other Settings</h5>
             <p>More settings can be added here, such as user preferences, theme selection, etc.</p>
         </div>
-
     </div>
+</div>
 
     <!-- Footer -->
     <footer class="bg-primary text-white text-center py-3 mt-4">
