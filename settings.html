@@ -11,11 +11,14 @@
 
     <style>
         body {
-            margin-top: 20px;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            margin: 0;
         }
         .settings-container {
             max-width: 600px;
-            margin: 0 auto;
+            margin: 20px auto;
             padding: 20px;
             background-color: #fff;
             border-radius: 8px;
@@ -27,23 +30,29 @@
         .setting-option {
             margin-bottom: 15px;
         }
-
+    
         /* Dark Mode Styles */
         body.dark-mode {
             background-color: #121212; /* Dark background */
             color: #fff; /* Light text */
         }
-
+    
         .dark-mode .navbar, .dark-mode .footer {
             background-color: #333; /* Dark navbar/footer */
         }
-
+    
         .dark-mode .card {
             background-color: #2d2d2d;
             border-color: #444;
         }
-
-        /* Back button styles */
+    
+        .dark-mode .settings-container {
+            background-color: #1e1e1e;
+            color: #fff;
+            border: 1px solid #444;
+        }
+    
+        /* Back button styling */
         .back-button {
             position: absolute;
             top: 10px;
@@ -57,9 +66,16 @@
             cursor: pointer;
             text-decoration: none;
         }
-
+    
         .back-button:hover {
             background-color: #0056b3;
+        }
+    
+        footer {
+            color: white;
+            text-align: center;
+            padding: 15px 0;
+            margin-top: auto;
         }
     </style>
 </head>
@@ -90,7 +106,7 @@
     </div>
 
     <!-- Footer -->
-    <footer class="bg-dark text-white text-center py-3 mt-4">
+    <footer class="bg-primary text-white text-center py-3 mt-4">
         <p>&copy; 2025 Your Company. All rights reserved.</p>
     </footer>
 
