@@ -3,18 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chris' Test Site - Under Construction</title>
+    <title>Chris' Test Site</title>
     <!-- Link to the Bootswatch Flatly theme -->
     <link href="https://cdn.jsdelivr.net/npm/bootswatch@5.3.3/dist/flatly/bootstrap.min.css" rel="stylesheet">
-    <!-- Bootstrap Icons CDN -->
+    <!-- Bootstrap Icons CDN (latest version) -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
-    <!-- Link to external styles.css -->
+    <!-- Link to styles.css -->
     <link rel="stylesheet" href="styles.css">
+    
 </head>
 <body>
 
     <!-- Navigation Bar -->
-    <nav class="navbar navbar-expand-lg header">
+    <nav class="navbar navbar-dark bg-bright-blue position-relative">
         <div class="container-fluid">
             <button class="hamburger-btn" onclick="openNav()">
                 <i class="bi bi-list"></i>
@@ -29,7 +30,7 @@
         <a href="index.html">Home</a>
         <a href="#" id="sidebar-about-link">About</a>
         <a href="#" id="sidebar-contact-link">Contact</a>
-        <a href="#" id="sidebar-settings-link">Settings</a>
+        <a href="settings.html">Settings</a>
         <div class="form-switch position-absolute bottom-0 start-0">
             <input class="form-check-input" type="checkbox" id="darkModeSwitch">
             <label class="form-check-label" for="darkModeSwitch">
@@ -38,17 +39,54 @@
         </div>
     </div>
 
-    <!-- Under Construction Content -->
-    <div class="container content d-flex justify-content-center align-items-center text-center">
-        <div>
-            <h1>Under Construction</h1>
-            <p class="lead">This site is currently being worked on. Check back soon!</p>
-            <i class="bi bi-tools" style="font-size: 3rem;"></i>
+    <!-- Content Section -->
+    <div class="container my-5 content">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card">
+                    <img src="assets/slots.jpg" class="card-img-top" alt="Slots image">
+                    <div class="card-body">
+                        <h5 class="card-title text-center">Slots Game</h5>
+                        <p class="card-text">Built-in browser slot machine game<br>(work in progress)</p>
+                        <div style="text-align: center;">
+                            <a href="slots.html" class="btn btn-primary">Play</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Chicken Game Card -->
+            <div class="col-md-4">
+                <div class="card">
+                    <img src="assets/chicken.png" class="card-img-top" alt="Chicken Game">
+                    <div class="card-body">
+                        <h5 class="card-title text-center">Chicken Game</h5>
+                        <p class="card-text">Avoid picking a mine in order to win coins (work in progress)</p>
+                        <div style="text-align: center;">
+                            <a href="chicken.html" class="btn btn-primary">Play</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Placeholder Card -->
+            <div class="col-md-4">
+                <div class="card">
+                    <img src="https://via.placeholder.com/150" class="card-img-top" alt="">
+                    <div class="card-body">
+                        <h5 class="card-title text-center">Placeholder</h5>
+                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                        <div style="text-align: center;">
+                            <a href="#" class="btn btn-primary">Play</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
     <!-- Footer -->
-    <footer class="footer text-center py-3">
+    <footer class="bg-bright-blue text-white text-center py-3">
         <p>© 2025 Christopher Shenton. All rights reserved.</p>
     </footer>
 
@@ -113,12 +151,6 @@
         });
 
         document.getElementById('sidebar-contact-link').addEventListener('click', function(event) {
-            event.preventDefault();
-            alert('Not Yet Implemented');
-            closeNav();
-        });
-
-        document.getElementById('sidebar-settings-link').addEventListener('click', function(event) {
             event.preventDefault();
             alert('Not Yet Implemented');
             closeNav();
