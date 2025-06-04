@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Anagramdle</title>
+   <!-- Bootstrap CSS -->
+   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+   <!-- Bootstrap JS -->
+   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <style>
+    body {
+      background-color: #121212; /* dark background */
+      color: white; /* default white text */
+    }
+
+    .dark-mode {
+      background-color: #1e1e1e;
+      color: #fff;
+    }
+
+    .dark-mode .card {
+      background-color: #2b2b2b;
+      color: #fff;
+    }
+
+    .dark-mode .modal-window {
+      background-color: #2b2b2b;
+      color: #fff;
+    }
+
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100vh;
+      width: 100vw;
+      background-color: rgba(0, 0, 0, 0.5);
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+    }
+
+    .modal-window {
+      background: #fff;
+      padding: 30px;
+      border-radius: 10px;
+      min-width: 300px;
+      text-align: center;
+      position: relative;
+      color: black;
+      max-height: 80vh;
+      overflow-y: auto;
+    }
+
+    .close-button {
+      position: absolute;
+      top: 10px;
+      right: 15px;
+      font-size: 24px;
+      cursor: pointer;
+    }
+
+    .dark-mode .close-button {
+      color: #fff;
+    }
+
+    .card-img-top {
+      max-height: 180px;
+      object-fit: cover;
+    }
+
+    /* Back button spacing and centering */
+    #back-button {
+  margin: 10px 0 30px 10px; /* top 20px, right 0, bottom 30px, left 20px */
+  display: inline-block;    /* inline-block lets it align left without full block width */
+}
+
+
+    /* Center and style game container */
+    #game-container {
+      color: white;
+      text-align: center;
+      max-width: 500px;
+      margin: 0 auto;
+    }
+
+    /* Letters styling - bigger and white */
+    #letters {
+      font-size: 3rem;
+      font-weight: bold;
+      letter-spacing: 0.5rem;
+      margin-bottom: 30rem;
+      color: white;
+      user-select: none;
+    }
+
+    /* Timer bar container */
+    #timer-bar-container {
+      width: 100%;
+      max-width: 400px;
+      margin: 1rem auto;
+    }
+
+    /* Input and buttons spacing */
+    #word-input {
+      width: 200px;
+      margin-right: 0.5rem;
+      display: inline-block;
+      vertical-align: middle;
+    }
+
+    #submit-button, #refresh-button, #quit-button {
+      margin: 0.3rem 0.2rem;
+    }
+
+    /* Welcome screen styling */
+    #welcome-screen {
+      max-width: 500px;
+      margin: 3rem auto;
+      color: white;
+    }
+
+    #welcome-screen img {
+      border-radius: 12px;
+      box-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="index.html">Free Daily Games</a>
+      <div class="collapse navbar-collapse" id="navbarContent">
+        <ul class="navbar-nav me-auto">
+          <li class="nav-item">
+            <a class="nav-link text-white" href="index.html">Home</a>
+          </li>
+        </ul>
+        <button class="btn btn-outline-light ms-auto" id="settings">Settings</button>
+      </div>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Settings Modal -->
+  <div id="settings-modal" class="modal-overlay">
+    <div class="modal-window">
+      <span class="close-button" id="close-settings">&times;</span>
+      <h2>Settings</h2>
+      <label class="form-check-label">
+        <input type="checkbox" class="form-check-input" id="darkModeToggle" />
+        Enable Dark Mode
+      </label>
+    </div>
+  </div>
+
+  <!-- Leaderboard Modal -->
+  <div id="leaderboard-modal" class="modal-overlay">
+    <div class="modal-window">
+      <span class="close-button" id="close-leaderboard">&times;</span>
+      <h2>Leaderboard - Top 10 Scores</h2>
+      <ol id="leaderboard-list" style="text-align:left; color:black; font-weight:bold; max-height:60vh; overflow-y:auto;"></ol>
+      <button class="btn btn-primary mt-3" id="close-leaderboard-btn">Close</button>
+    </div>
+  </div>
+
+  <!-- Back Button -->
+  <button id="back-button" class="btn btn-outline-light" onclick="window.history.back()">← Back</button>
+
+  <!-- Welcome Screen -->
+  <div id="welcome-screen" class="text-center mt-5">
+    <h1 class="mb-3" style="margin: 2rem;">Anagramdle</h1>
+    <img src="anagramdle.jpg" alt="Welcome to Anagramdle" class="img-fluid" style="max-width: 400px;"/>
+    <br /><br />
+    <button id="play-button" class="btn btn-primary btn-lg me-3">Play</button>
+    <button id="leaderboard-button" class="btn btn-success btn-lg">Leaderboard</button>
+  </div>
+
+  <!-- Game Container (hidden initially) -->
+  <div id="game-container" class="container mt-4" style="display:none;">
+    <h1>Anagramdle</h1>
+    <div id="letters" class="mb-3"></div>
+
+    <input type="text" id="word-input" placeholder="Enter a word..." class="form-control d-inline-block" />
+    <button id="submit-button" class="btn btn-success">Submit</button>
+    <button id="refresh-button" class="btn btn-secondary">Refresh Letters</button>
+
+    <!-- Timer progress bar -->
+    <div id="timer-bar-container">
+      <div class="progress">
+        <div id="timer-bar" class="progress-bar bg-info" role="progressbar" style="width: 100%;" aria-valuemin="0" aria-valuemax="300" aria-valuenow="300"></div>
+      </div>
+      <div id="timer-text" style="margin-top: 0.5rem; font-weight: bold; color: white;">Time left: 5:00</div>
+    </div>
+
+    <div id="message" class="mt-2"></div>
+    <div id="score" class="mt-2">Score: 0</div>
+    <div id="log" style="max-height: 150px; overflow-y: auto; margin-top: 1rem; color: white;"></div>
+  </div>
+
+  <script>
+    const settingsBtn = document.getElementById("settings");
+    const settingsModal = document.getElementById("settings-modal");
+    const darkToggle = document.getElementById("darkModeToggle");
+    const closeSettingsBtn = document.getElementById("close-settings");
+    const playButton = document.getElementById("play-button");
+    const leaderboardButton = document.getElementById("leaderboard-button");
+    const welcomeScreen = document.getElementById('welcome-screen');
+    const gameContainer = document.getElementById('game-container');
+    const leaderboardModal = document.getElementById("leaderboard-modal");
+    const closeLeaderboardBtn = document.getElementById("close-leaderboard");
+    const closeLeaderboardBtn2 = document.getElementById("close-leaderboard-btn");
+    const leaderboardList = document.getElementById("leaderboard-list");
+
+    playButton.addEventListener('click', () => {
+      // Hide welcome screen
+      welcomeScreen.style.display = 'none';
+      // Show game UI
+      gameContainer.style.display = 'block';
+      // Start the game logic
+      startGame();
+    });
+
+    leaderboardButton.addEventListener('click', () => {
+      // Show leaderboard modal and fetch scores
+      leaderboardModal.style.display = "flex";
+      fetchLeaderboard();
+    });
+
+    closeLeaderboardBtn.addEventListener("click", () => {
+      leaderboardModal.style.display = "none";
+    });
+    closeLeaderboardBtn2.addEventListener("click", () => {
+      leaderboardModal.style.display = "none";
+    });
+
+    const darkModeSetting = localStorage.getItem("darkMode");
+
+    if (darkModeSetting === null) {
+        document.body.classList.add("dark-mode");
+        darkToggle.checked = true;
+        localStorage.setItem("darkMode", true);
+    } else if (darkModeSetting === "true") {
+        document.body.classList.add("dark-mode");
+        darkToggle.checked = true;
+    }
+
+    settingsBtn.addEventListener("click", () => {
+        settingsModal.style.display = "flex";
+    });
+
+    closeSettingsBtn.addEventListener("click", () => {
+        settingsModal.style.display = "none";
+    });
+
+    darkToggle.addEventListener("change", (e) => {
+        if (e.target.checked) {
+        document.body.classList.add("dark-mode");
+        localStorage.setItem("darkMode", true);
+        } else {
+        document.body.classList.remove("dark-mode");
+        localStorage.setItem("darkMode", false);
+        }
+    });
+
+    const SCORES = {2: 1, 3: 2, 4: 4, 5: 8, 6: 16, 7: 32};
+    const DICTIONARY = new Set();
+    let usedWords = new Set();
+    let letters = [];
+    let score = 0;
+    let timerInterval;
+    let timeLeft = 300;
+
+    async function loadDictionary() {
+      const res = await fetch('words.txt');
+      const text = await res.text();
+      text.split('\n').forEach(word => DICTIONARY.add(word.trim().toUpperCase()));
+    }
+
+    function generateLetters() {
+      const pool = "E".repeat(12) + "A".repeat(9) + "I".repeat(9) + "O".repeat(8) +
+                   "N".repeat(6) + "R".repeat(6) + "T".repeat(6) + "L".repeat(4) +
+                   "S".repeat(4) + "U".repeat(4) + "D".repeat(4) + "G".repeat(3) +
+                   "BCMPFHVWYKJXQZ".split('').map(ch => ch.repeat("BCMPFHVWYKJXQZ".includes(ch) ? 2 : 1)).join('');
+      letters = Array.from({length: 7}, () => pool[Math.floor(Math.random() * pool.length)]);
+      document.getElementById('letters').textContent = letters.join(' ');
+    }
+
+    function isValidWord(word) {
+      word = word.toUpperCase();
+      if (usedWords.has(word) || !DICTIONARY.has(word)) return false;
+      let temp = [...letters];
+      for (let char of word) {
+        const idx = temp.indexOf(char);
+        if (idx === -1) return false;
+        temp.splice(idx, 1);
+      }
+      return true;
+    }
+
+    function submitWord() {
+      const input = document.getElementById('word-input');
+      const word = input.value.trim().toUpperCase();
+      input.value = '';
+      if (word === '') return;
+      if (word.length < 2) return log(`Word too short.`);
+      if (isValidWord(word)) {
+        usedWords.add(word);
+        const pts = SCORES[word.length] || 0;
+        score += pts;
+        document.getElementById('score').textContent = `Score: ${score}`;
+        log(`✅ "${word}" is valid! +${pts} points.`);
+      } else {
+        log(`❌ "${word}" is not valid or already used.`);
+      }
+    }
+
+    function log(message) {
+      const logDiv = document.getElementById('log');
+      logDiv.innerHTML += `<div>${message}</div>`;
+      logDiv.scrollTop = logDiv.scrollHeight;
+    }
+
+    function refreshLetters() {
+      generateLetters();
+    }
+
+    function quitGame() {
+      clearInterval(timerInterval);
+      log(`🛑 Game over. Final score: ${score}`);
+      submitScoreToServer(score);
+    }
+
+    function updateTimer() {
+      timeLeft--;
+      const mins = Math.floor(timeLeft / 60);
+      const secs = timeLeft % 60;
+      document.getElementById('timer-text').textContent = `Time left: ${mins}:${secs.toString().padStart(2, '0')}`;
+
+      // Update progress bar width (percentage of 300 seconds)
+      const percent = (timeLeft / 300) * 100;
+      const timerBar = document.getElementById('timer-bar');
+      timerBar.style.width = percent + '%';
+      timerBar.setAttribute('aria-valuenow', timeLeft);
+
+      if (timeLeft <= 0) {
+        clearInterval(timerInterval);
+        log(`⏰ Time's up! Final score: ${score}`);
+        submitScoreToServer(score);
+      }
+    }
+
+    async function startGame() {
+      await loadDictionary();
+      generateLetters();
+      usedWords = new Set();
+      score = 0;
+      timeLeft = 300;
+      document.getElementById('score').textContent = `Score: 0`;
+      document.getElementById('log').innerHTML = '';
+      document.getElementById('timer-bar').style.width = '100%';
+      document.getElementById('timer-bar').setAttribute('aria-valuenow', 300);
+      document.getElementById('timer-text').textContent = 'Time left: 5:00';
+      timerInterval = setInterval(updateTimer, 1000);
+    }
+
+    // Fetch leaderboard scores from server
+    async function fetchLeaderboard() {
+      leaderboardList.innerHTML = '<li>Loading...</li>';
+      try {
+        const res = await fetch('http://34.29.228.12/scores');
+        if (!res.ok) throw new Error('Failed to fetch leaderboard');
+        const scores = await res.json();
+        if (scores.length === 0) {
+          leaderboardList.innerHTML = '<li>No scores yet.</li>';
+          return;
+        }
+        leaderboardList.innerHTML = '';
+        scores.slice(0, 10).forEach((entry) => {
+          leaderboardList.innerHTML += `<li>${entry.name || 'Anonymous'} - ${entry.score}</li>`;
+        });
+      } catch (err) {
+        leaderboardList.innerHTML = '<li>Error loading leaderboard.</li>';
+        console.error(err);
+      }
+    }
+
+
+    // Submit score to server
+    async function submitScoreToServer(finalScore) {
+      // Example prompt for player name
+      let playerName = prompt("Enter your name for the leaderboard:", "Anonymous");
+      if (playerName === null) playerName = "Anonymous";
+      playerName = playerName.trim() || "Anonymous";
+
+      try {
+        const res = await fetch('/scores', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ name: playerName, score: finalScore })
+        });
+        if (!res.ok) throw new Error('Failed to submit score');
+        log('🏆 Score submitted to leaderboard!');
+      } catch (err) {
+        log('⚠️ Could not submit score to leaderboard.');
+        console.error(err);
+      }
+    }
+
+    // Event Listeners
+    document.getElementById('submit-button').addEventListener('click', submitWord);
+    document.getElementById('refresh-button').addEventListener('click', refreshLetters);
+    document.getElementById('word-input').addEventListener('keypress', function (e) {
+        if (e.key === "Enter") {
+            document.getElementById("submit-button").click();
+        }
+    });
+  </script>
+</body>
+</html>

@@ -1,128 +1,167 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chris' Test Site - Under Construction</title>
-    <!-- Link to the Bootswatch Flatly theme -->
-    <link href="https://cdn.jsdelivr.net/npm/bootswatch@5.3.3/dist/flatly/bootstrap.min.css" rel="stylesheet">
-    <!-- Bootstrap Icons CDN -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
-    <!-- Link to external styles.css -->
-    <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Free Daily Games</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    .dark-mode {
+      background-color: #1e1e1e;
+      color: #fff;
+    }
+
+    .dark-mode .card {
+      background-color: #2b2b2b;
+      color: #fff;
+    }
+
+    .dark-mode .modal-window {
+      background-color: #2b2b2b;
+      color: #fff;
+    }
+
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100vh;
+      width: 100vw;
+      background-color: rgba(0, 0, 0, 0.5);
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+    }
+
+    .modal-window {
+      background: #fff;
+      padding: 30px;
+      border-radius: 10px;
+      min-width: 300px;
+      text-align: center;
+      position: relative;
+    }
+
+    .close-button {
+      position: absolute;
+      top: 10px;
+      right: 15px;
+      font-size: 24px;
+      cursor: pointer;
+    }
+
+    .dark-mode .close-button {
+      color: #fff;
+    }
+
+    .card-img-top {
+      max-height: 180px;
+      object-fit: cover;
+    }
+  </style>
 </head>
 <body>
 
-    <!-- Navigation Bar -->
-    <nav class="navbar navbar-expand-lg header">
-        <div class="container-fluid">
-            <button class="hamburger-btn" onclick="openNav()">
-                <i class="bi bi-list"></i>
-            </button>
-            <a class="navbar-brand" href="index.html">Chris' Test Site</a>
-        </div>
-    </nav>
-
-    <!-- Sidebar -->
-    <div id="mySidebar" class="sidebar">
-        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
-        <a href="index.html">Home</a>
-        <a href="#" id="sidebar-about-link">About</a>
-        <a href="#" id="sidebar-contact-link">Contact</a>
-        <a href="#" id="sidebar-settings-link">Settings</a>
-        <div class="form-switch position-absolute bottom-0 start-0">
-            <input class="form-check-input" type="checkbox" id="darkModeSwitch">
-            <label class="form-check-label" for="darkModeSwitch">
-                Dark Mode
-            </label>
-        </div>
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="index.html">Free Daily Games</a>
+      <div class="collapse navbar-collapse" id="navbarContent">
+        <ul class="navbar-nav me-auto">
+          <li class="nav-item">
+            <a class="nav-link text-white" href="index.html">Home</a>
+          </li>
+        </ul>
+        <button class="btn btn-outline-light ms-auto" id="settings">Settings</button>
+      </div>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
+        <span class="navbar-toggler-icon"></span>
+      </button>
     </div>
+  </nav>
 
-    <!-- Under Construction Content -->
-    <div class="container content d-flex justify-content-center align-items-center text-center">
-        <div>
-            <h1>Under Construction</h1>
-            <p class="lead">This site is currently being worked on. Check back soon!</p>
-            <i class="bi bi-tools" style="font-size: 3rem;"></i>
+  <!-- Game Cards -->
+  <div class="container py-5">
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+
+      <!-- Game Card 1 -->
+      <div class="col">
+        <div class="card h-100">
+          <img src="images/anagramdle.jpg" onerror="this.style.display='none';" alt="Anagramdle" />
+          <div class="card-body">
+            <h5 class="card-title">Anagramdle</h5>
+            <p class="card-text">Play the classic word-building game.</p>
+            <a href="anagramdle.html" class="btn btn-primary">Play</a>
+          </div>
         </div>
-    </div>
+      </div>
 
-    <!-- Footer -->
-    <footer class="footer text-center py-3">
-        <p>© 2025 Christopher Shenton. All rights reserved.</p>
-    </footer>
-
-    <!-- Modal for Dark Mode status -->
-    <div class="modal fade" id="darkModeModal" tabindex="-1" aria-labelledby="darkModeModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content" style="min-height: 100px;">
-                <div class="modal-body d-flex justify-content-center align-items-center" id="darkModeMessage">
-                    <!-- Message will be inserted here dynamically -->
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
-                </div>
-            </div>
+      <!-- Placeholder Card -->
+      <div class="col">
+        <div class="card h-100">
+          <img src="images/coming-soon.jpg" onerror="this.style.display='none';" alt="Coming Soon" />
+          <div class="card-body">
+            <h5 class="card-title">Coming Soon</h5>
+            <p class="card-text">More games will appear here!</p>
+            <button class="btn btn-secondary" disabled>Unavailable</button>
+          </div>
         </div>
+      </div>
+
+      <!-- Add more cards here -->
     </div>
+  </div>
 
-    <!-- Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- Settings Modal -->
+  <div id="settings-modal" class="modal-overlay">
+    <div class="modal-window">
+      <span class="close-button" id="close-settings">&times;</span>
+      <h2>Settings</h2>
+      <label class="form-check-label">
+        <input type="checkbox" class="form-check-input" id="darkModeToggle" />
+        Enable Dark Mode
+      </label>
+    </div>
+  </div>
 
-    <!-- Custom JavaScript -->
-    <script>
-        // Sidebar functions
-        function openNav() {
-            document.getElementById("mySidebar").style.width = "250px";
-        }
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+  const settingsBtn = document.getElementById("settings");
+  const settingsModal = document.getElementById("settings-modal");
+  const darkToggle = document.getElementById("darkModeToggle");
+  const closeBtn = document.getElementById("close-settings");
 
-        function closeNav() {
-            document.getElementById("mySidebar").style.width = "0";
-        }
+  // Check localStorage for dark mode preference
+  const darkModeSetting = localStorage.getItem("darkMode");
 
-        // Check and apply dark mode on page load
-        if (localStorage.getItem('darkMode') === 'enabled') {
-            document.body.classList.add('dark-mode');
-            document.getElementById('darkModeSwitch').checked = true;
-        }
+  if (darkModeSetting === null) {
+    // No preference found - default to dark mode
+    document.body.classList.add("dark-mode");
+    darkToggle.checked = true;
+    localStorage.setItem("darkMode", true);
+  } else if (darkModeSetting === "true") {
+    document.body.classList.add("dark-mode");
+    darkToggle.checked = true;
+  }
 
-        // Toggle dark mode when switch is clicked
-        document.getElementById('darkModeSwitch').addEventListener('change', function() {
-            let message = '';
-            if (this.checked) {
-                document.body.classList.add('dark-mode');
-                localStorage.setItem('darkMode', 'enabled');
-                message = 'Dark Mode Enabled';
-            } else {
-                document.body.classList.remove('dark-mode');
-                localStorage.setItem('darkMode', 'disabled');
-                message = 'Dark Mode Disabled';
-            }
+  settingsBtn.addEventListener("click", () => {
+    settingsModal.style.display = "flex";
+  });
 
-            // Show the modal with the appropriate message
-            document.getElementById('darkModeMessage').textContent = message;
-            var myModal = new bootstrap.Modal(document.getElementById('darkModeModal'));
-            myModal.show();
-        });
+  closeBtn.addEventListener("click", () => {
+    settingsModal.style.display = "none";
+  });
 
-        // Add event listeners for sidebar links
-        document.getElementById('sidebar-about-link').addEventListener('click', function(event) {
-            event.preventDefault();
-            alert('Not Yet Implemented');
-            closeNav();
-        });
-
-        document.getElementById('sidebar-contact-link').addEventListener('click', function(event) {
-            event.preventDefault();
-            alert('Not Yet Implemented');
-            closeNav();
-        });
-
-        document.getElementById('sidebar-settings-link').addEventListener('click', function(event) {
-            event.preventDefault();
-            alert('Not Yet Implemented');
-            closeNav();
-        });
-    </script>
+  darkToggle.addEventListener("change", (e) => {
+    if (e.target.checked) {
+      document.body.classList.add("dark-mode");
+      localStorage.setItem("darkMode", true);
+    } else {
+      document.body.classList.remove("dark-mode");
+      localStorage.setItem("darkMode", false);
+    }
+  });
+</script>
 </body>
 </html>
