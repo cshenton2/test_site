@@ -324,8 +324,15 @@
     }
 
     function generateLetters() {
-      const pool = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split('').map(ch => ch.repeat(1)).join('');
-      letters = Array.from({length: 7}, () => pool[Math.floor(Math.random() * pool.length)]);
+      const pool = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+      const vowels = new Set(['A', 'E', 'I', 'O', 'U']);
+      let letters = [];
+
+      // Keep generating letters until there's at least one vowel
+      do {
+        letters = Array.from({ length: 7 }, () => pool[Math.floor(Math.random() * pool.length)]);
+      } while (!letters.some(letter => vowels.has(letter)));
+
       const lettersContainer = document.getElementById('letters');
       lettersContainer.innerHTML = '';
       letters.forEach(letter => {
@@ -419,7 +426,7 @@
     async function fetchLeaderboard() {
       leaderboardList.innerHTML = '<li>Loading...</li>';
       try {
-        const res = await fetch('http://34.29.228.12/scores');
+        const res = await fetch('/leaderboard');
         if (!res.ok) throw new Error('Failed to fetch leaderboard');
         const scores = await res.json();
         if (scores.length === 0) {
@@ -428,7 +435,7 @@
         }
         leaderboardList.innerHTML = '';
         scores.slice(0, 10).forEach((entry) => {
-          leaderboardList.innerHTML += `<li>${entry.name || 'Anonymous'} - ${entry.score}</li>`;
+          leaderboardList.innerHTML += `<li>${entry.username} - ${entry.score}</li>`;
         });
       } catch (err) {
         leaderboardList.innerHTML = '<li>Error loading leaderboard.</li>';
@@ -441,15 +448,18 @@
       if (playerName === null) playerName = "Anonymous";
       playerName = playerName.trim() || "Anonymous";
       try {
-        const res = await fetch('/scores', {
+        const res = await fetch('/leaderboard', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
           },
-          body: JSON.stringify({ name: playerName, score: finalScore })
+          body: JSON.stringify({ username: playerName, score: finalScore })
         });
         if (!res.ok) throw new Error('Failed to submit score');
+        const data = await res.json();
         log('🏆 Score submitted to leaderboard!');
+        // Optionally, refresh leaderboard after submission
+        fetchLeaderboard();
       } catch (err) {
         log('⚠️ Could not submit score to leaderboard.');
         console.error(err);
