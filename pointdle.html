@@ -318,17 +318,22 @@
     const totalRounds = 5;
 
     async function loadDictionary() {
-      const res = await fetch('words.txt');
-      const text = await res.text();
-      text.split('\n').forEach(word => DICTIONARY.add(word.trim().toUpperCase()));
+      try {
+        const res = await fetch('words.txt');
+        if (!res.ok) throw new Error(`Failed to fetch dictionary: ${res.status}`);
+        const text = await res.text();
+        text.split('\n').forEach(word => DICTIONARY.add(word.trim().toUpperCase()));
+        console.log(`Loaded ${DICTIONARY.size} words.`);
+      } catch (e) {
+        console.error('Error loading dictionary:', e);
+      }
     }
 
     function generateLetters() {
       const pool = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
       const vowels = new Set(['A', 'E', 'I', 'O', 'U']);
-      let letters = [];
-
-      // Keep generating letters until there's at least one vowel
+      
+      // Generate letters until there is at least one vowel
       do {
         letters = Array.from({ length: 7 }, () => pool[Math.floor(Math.random() * pool.length)]);
       } while (!letters.some(letter => vowels.has(letter)));
@@ -342,6 +347,7 @@
         lettersContainer.appendChild(tile);
       });
     }
+
 
     function isValidWord(word) {
       word = word.toUpperCase();
